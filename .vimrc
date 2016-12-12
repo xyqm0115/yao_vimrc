@@ -15,8 +15,9 @@ Plugin 'vim-airline/vim-airline-themes'
 "Plugin 'powerline/fonts'
 Plugin 'luochen1990/rainbow'
 Plugin 'nathanaelkane/vim-indent-guides'
-
-
+Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'klen/python-mode'
 
 
 call vundle#end()
@@ -49,9 +50,10 @@ set iskeyword-=-
 "当提交git commit时候，光标信息在第一行
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
-set backup
+"set backup
 
 set undofile
+set undodir=$HOME/.vim/undo
 set undolevels=1000
 set undoreload=10000
 
@@ -86,52 +88,89 @@ set whichwrap=b,s,h,l,<,>,[,] "显示可以折叠的
 set scrolljump=5
 set scrolloff=3
 set foldenable
+set foldmethod=indent
+set foldnestmax=1
 set list
-
-
- set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
 
 
 
 
- set wrap
- set autoindent
- set shiftwidth=4
- set expandtab
- set tabstop=5
- set softtabstop=4
- set nojoinspaces
- set splitright
- set splitbelow
- "set pastetoggle=<F12>  "paste模式开关
+set wrap
+set autoindent
+set shiftwidth=4
+set expandtab
+set tabstop=5
+set softtabstop=4
+set nojoinspaces
+set splitright
+set splitbelow
+"set pastetoggle=<F12>  "paste模式开关
 
- "不懂
- autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer>
- autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+"不懂
+"autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
+"autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
+"autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
 
- noremap j gj
- noremap k gk
+noremap j gj
+noremap k gk
 
- "nerdtree
-      map <C-e> :NERDTreeToggle<CR>
-      map <leader>e :NERDTreeFind<CR>
-      nmap <leader>nt :NERDTreeFind<CR>
+"stupid shift key fixed
+command! -bang -nargs=* -complete=file E e<bang> <args>
+command! -bang -nargs=* -complete=file W w<bang> <args>
+command! -bang -nargs=* -complete=file Wq wq<bang> <args>
+command! -bang -nargs=* -complete=file WQ wq<bang> <args>
+command! -bang Wa wa<bang>
+command! -bang WA wa<bang>
+command! -bang Q q<bang>
+command! -bang QA qa<bang>
+command! -bang Qa qa<bang>
 
-      let NERDTreeShowBookmarks=1
-      let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-      let NERDTreeChDirMode=0
-      let NERDTreeQuitOnOpen=1
-      let NERDTreeMouseMode=2
-      let NERDTreeShowHidden=1
-      let NERDTreeKeepTreeInNewTab=1
-      let g:nerdtree_tabs_open_on_gui_startup=0
+"nerdtree
+     map <C-e> :NERDTreeToggle<CR>
+     map <leader>e :NERDTreeFind<CR>
+     nmap <leader>nt :NERDTreeFind<CR>
 
- "airline
- let g:airline_theme='jellybeans'
- let g:airline#extensions#tabline#enabled = 1
+     let NERDTreeShowBookmarks=1
+     let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+     let NERDTreeChDirMode=0
+     let NERDTreeQuitOnOpen=1
+     let NERDTreeMouseMode=2
+     let NERDTreeShowHidden=1
+     let NERDTreeKeepTreeInNewTab=1
+     let g:nerdtree_tabs_open_on_gui_startup=0
 
- "vim-indent-guides
- let g:indent_guides_start_level = 2
- let g:indent_guides_guide_size = 1
- let g:indent_guides_enable_on_vim_startup = 1
+"airline
+let g:airline_theme='jellybeans'
+let g:airline#extensions#tabline#enabled = 1 "显示buffer
+let g:airline#extensions#tabline#buffer_nr_show = 1 "显示buffer number
+
+"vim-indent-guides
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_enable_on_vim_startup = 1
+
+"jedi-vim
+let g:jedi#auto_initialization = 0
+let g:jedi#use_tabs_not_buffers = 1
+let g:jedi#use_splits_not_buffers = "left"
+let g:jedi#popup_on_dot = 0
+
+"vimgutter
+set updatetime=1000
+let g:gitgutter_override_sign_column_highlight = 0
+"highlight SignColumn ctermbg=whatever
+
+"vim-syntastic
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+"let g:syntastic_python_checkers = ['pyflakes']
+
+"pymode
+let g:pymode_lint_checkers = ['pyflakes']
+let g:pymode_trim_whitespaces = 0
+let g:pymode_options = 0
+let g:pymode_rope = 0
