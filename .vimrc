@@ -52,10 +52,10 @@ au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
 "set backup
 
-set undofile
-set undodir=$HOME/.vim/undo
-set undolevels=1000
-set undoreload=10000
+"set undofile
+"set undodir=$HOME/.vim/undo
+"set undolevels=1000
+"set undoreload=10000
 
 set showmode
 
@@ -88,8 +88,8 @@ set whichwrap=b,s,h,l,<,>,[,] "显示可以折叠的
 set scrolljump=5
 set scrolloff=3
 set foldenable
-set foldmethod=indent
-set foldnestmax=1
+"set foldmethod=indent
+"set foldnestmax=1
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
 
@@ -141,6 +141,11 @@ command! -bang Qa qa<bang>
      let NERDTreeKeepTreeInNewTab=1
      let g:nerdtree_tabs_open_on_gui_startup=0
 
+"YCM
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_cache_omnifunc = 1
+
+
 "airline
 let g:airline_theme='jellybeans'
 let g:airline#extensions#tabline#enabled = 1 "显示buffer
@@ -158,7 +163,7 @@ let g:jedi#use_splits_not_buffers = "left"
 let g:jedi#popup_on_dot = 0
 
 "vimgutter
-set updatetime=1000
+set updatetime=250
 let g:gitgutter_override_sign_column_highlight = 0
 "highlight SignColumn ctermbg=whatever
 
@@ -170,7 +175,7 @@ let g:syntastic_check_on_wq = 0
 "let g:syntastic_python_checkers = ['pyflakes']
 
 "pymode
-let g:pymode_lint_checkers = ['pyflakes']
+let g:pymode_lint_checkers = ['pep8', 'pyflakes']
 let g:pymode_trim_whitespaces = 0
 let g:pymode_options = 0
 let g:pymode_rope = 0
